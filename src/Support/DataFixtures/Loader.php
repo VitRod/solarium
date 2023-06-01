@@ -20,7 +20,7 @@ class Loader
     /**
      * @var FixtureInterface[]
      */
-    private $fixtures;
+    private $fixtures = [];
 
     /**
      * The file extension of fixture files.
@@ -34,7 +34,6 @@ class Loader
      */
     public function __construct()
     {
-        $this->fixtures = [];
     }
 
     /**

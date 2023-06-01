@@ -281,7 +281,7 @@ class DisMax extends AbstractComponent
             if (\array_key_exists($key, $this->boostQueries)) {
                 return $this->boostQueries[$key]->getQuery();
             }
-        } elseif (!empty($this->boostQueries)) {
+        } elseif ($this->boostQueries !== []) {
             /** @var BoostQuery[] $boostQueries */
             $boostQueries = array_values($this->boostQueries);
 
@@ -313,7 +313,7 @@ class DisMax extends AbstractComponent
 
         $key = $boostQuery->getKey();
 
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('A boostquery must have a key value');
         }
 

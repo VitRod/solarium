@@ -263,10 +263,8 @@ class Query extends BaseQuery
                     break;
                 }
             }
-        } else {
-            if (isset($this->commands[$keyOrCommand])) {
-                unset($this->commands[$keyOrCommand]);
-            }
+        } elseif (isset($this->commands[$keyOrCommand])) {
+            unset($this->commands[$keyOrCommand]);
         }
 
         return $this;

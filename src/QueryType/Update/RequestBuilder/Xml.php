@@ -82,9 +82,8 @@ class Xml extends AbstractRequestBuilder
                     throw new RuntimeException('Unsupported command type');
             }
         }
-        $xml .= '</update>';
 
-        return $xml;
+        return $xml . '</update>';
     }
 
     /**
@@ -119,9 +118,7 @@ class Xml extends AbstractRequestBuilder
             $xml .= '</doc>';
         }
 
-        $xml .= '</add>';
-
-        return $xml;
+        return $xml . '</add>';
     }
 
     /**
@@ -140,9 +137,8 @@ class Xml extends AbstractRequestBuilder
         foreach ($command->getQueries() as $query) {
             $xml .= '<query>'.$this->getHelper()->escapeXMLCharacterData($query).'</query>';
         }
-        $xml .= '</delete>';
 
-        return $xml;
+        return $xml . '</delete>';
     }
 
     /**
@@ -158,9 +154,8 @@ class Xml extends AbstractRequestBuilder
         $xml .= $this->boolAttrib('softCommit', $command->getSoftCommit());
         $xml .= $this->boolAttrib('waitSearcher', $command->getWaitSearcher());
         $xml .= $this->attrib('maxSegments', $command->getMaxSegments());
-        $xml .= '/>';
 
-        return $xml;
+        return $xml . '/>';
     }
 
     /**
@@ -176,9 +171,8 @@ class Xml extends AbstractRequestBuilder
         $xml .= $this->boolAttrib('softCommit', $command->getSoftCommit());
         $xml .= $this->boolAttrib('waitSearcher', $command->getWaitSearcher());
         $xml .= $this->boolAttrib('expungeDeletes', $command->getExpungeDeletes());
-        $xml .= '/>';
 
-        return $xml;
+        return $xml . '/>';
     }
 
     /**
@@ -246,9 +240,7 @@ class Xml extends AbstractRequestBuilder
             $value = $helper->escapeXMLCharacterData($helper->filterControlCharacters($value));
         }
 
-        $xml .= '>'.$value.'</field>';
-
-        return $xml;
+        return $xml . ('>'.$value.'</field>');
     }
 
     /**

@@ -52,3 +52,6 @@ foreach ($statsResult as $field) {
 }
 
 htmlFooter();
+
+
+

@@ -53,7 +53,7 @@ class Response
     public function __construct(string $body, array $headers = [])
     {
         $this->body = $body;
-        if ($headers) {
+        if ($headers !== []) {
             $this->setHeaders($headers);
         }
     }

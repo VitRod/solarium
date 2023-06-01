@@ -80,7 +80,7 @@ class BufferedDelete extends BufferedDeleteLite
      */
     public function flush()
     {
-        if (0 === \count($this->buffer)) {
+        if ([] === $this->buffer) {
             // nothing to do
             return false;
         }

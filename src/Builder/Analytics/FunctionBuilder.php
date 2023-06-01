@@ -43,7 +43,7 @@ class FunctionBuilder
      */
     public static function expr(): ExpressionBuilder
     {
-        if (null === self::$expressionBuilder) {
+        if (!self::$expressionBuilder instanceof \Solarium\Builder\Analytics\ExpressionBuilder) {
             self::$expressionBuilder = new ExpressionBuilder();
         }
 

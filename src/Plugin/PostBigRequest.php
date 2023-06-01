@@ -98,7 +98,9 @@ class PostBigRequest extends AbstractPlugin
         $dispatcher = $this->client->getEventDispatcher();
         if (is_subclass_of($dispatcher, '\Symfony\Component\EventDispatcher\EventDispatcherInterface')) {
             // PostBigRequest has to act on PRE_EXECUTE_REQUEST before Loadbalancer (priority 0). Set priority to 10.
-            $dispatcher->addListener(Events::PRE_EXECUTE_REQUEST, [$this, 'preExecuteRequest'], 10);
+            $dispatcher->addListener(Events::PRE_EXECUTE_REQUEST, function (object $event) : \Solarium\Plugin\PostBigRequest {
+                return $this->preExecuteRequest($event);
+            }, 10);
         }
     }
 
@@ -111,7 +113,9 @@ class PostBigRequest extends AbstractPlugin
     {
         $dispatcher = $this->client->getEventDispatcher();
         if (is_subclass_of($dispatcher, '\Symfony\Component\EventDispatcher\EventDispatcherInterface')) {
-            $dispatcher->removeListener(Events::PRE_EXECUTE_REQUEST, [$this, 'preExecuteRequest']);
+            $dispatcher->removeListener(Events::PRE_EXECUTE_REQUEST, function (object $event) : \Solarium\Plugin\PostBigRequest {
+                return $this->preExecuteRequest($event);
+            });
         }
     }
 }

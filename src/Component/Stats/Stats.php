@@ -113,7 +113,7 @@ class Stats extends AbstractComponent
 
         $key = $field->getKey();
 
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('A field must have a key value');
         }
 

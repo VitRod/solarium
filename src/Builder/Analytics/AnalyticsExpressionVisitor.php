@@ -33,7 +33,7 @@ class AnalyticsExpressionVisitor extends AbstractExpressionVisitor
      */
     public function dispatch(ExpressionInterface $expr)
     {
-        if (true === $expr instanceof FunctionInterface) {
+        if ($expr instanceof FunctionInterface) {
             return $this->walkExpression($expr);
         }
 
@@ -43,7 +43,7 @@ class AnalyticsExpressionVisitor extends AbstractExpressionVisitor
     /**
      * {@inheritdoc}
      */
-    public function walkExpression(ExpressionInterface $expression)
+    public function walkExpression(ExpressionInterface $expression): string
     {
         return (string) $expression;
     }

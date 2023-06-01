@@ -40,7 +40,7 @@ class MoreLikeThis extends AbstractResponseParser implements ComponentParserInte
         $interestingTerms = [];
 
         if (isset($data['moreLikeThis'])) {
-            if (!$query) {
+            if (!$query instanceof \Solarium\Component\ComponentAwareQueryInterface) {
                 throw new InvalidArgumentException('A valid query object needs to be provided.');
             }
             $documentClass = $query->getOption('documentclass');

@@ -80,7 +80,7 @@ abstract class AbstractComponent extends Configurable
      */
     public function getHelper(): Helper
     {
-        if ($queryInstance = $this->getQueryInstance()) {
+        if (($queryInstance = $this->getQueryInstance()) instanceof \Solarium\Core\Query\AbstractQuery) {
             return $queryInstance->getHelper();
         }
 

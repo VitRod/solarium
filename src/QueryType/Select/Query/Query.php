@@ -556,7 +556,7 @@ class Query extends AbstractQuery implements ComponentAwareQueryInterface, Query
 
         $key = $filterQuery->getKey();
 
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('A filterquery must have a key value');
         }
 

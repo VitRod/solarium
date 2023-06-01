@@ -79,7 +79,7 @@ class Synonyms extends AbstractQuery
      */
     public function getResponseParser(): ResponseParserInterface
     {
-        if (null === $this->command) {
+        if (!$this->command instanceof \Solarium\QueryType\ManagedResources\Query\AbstractCommand) {
             if (null === $this->term) {
                 $parser = new SynonymsResponseParser();
             } else {

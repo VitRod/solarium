@@ -134,7 +134,7 @@ trait JsonFacetTrait
             $facets[$key] = $facet->serialize();
         }
 
-        if ($facets) {
+        if ($facets !== []) {
             $this->setOption('facet', $facets);
         } elseif (isset($this->options['facet'])) {
             unset($this->options['facet']);

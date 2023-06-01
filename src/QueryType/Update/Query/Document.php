@@ -456,7 +456,7 @@ class Document extends AbstractDocument
      */
     public function getFields(): array
     {
-        if ((null === $this->key || !isset($this->fields[$this->key])) && \count($this->modifiers) > 0) {
+        if ((null === $this->key || !isset($this->fields[$this->key])) && $this->modifiers !== []) {
             throw new RuntimeException('A document that uses modifiers (atomic updates) must have a key defined before it is used');
         }
 
@@ -530,7 +530,7 @@ class Document extends AbstractDocument
      */
     protected function getHelper(): Helper
     {
-        if (null === $this->helper) {
+        if (!$this->helper instanceof \Solarium\Core\Query\Helper) {
             $this->helper = new Helper();
         }
 

@@ -92,7 +92,7 @@ class LocalParameter implements LocalParameterInterface
      */
     public function __toString(): string
     {
-        if (0 === \count($this->values) || '' === key($this->values)) {
+        if ([] === $this->values || '' === key($this->values)) {
             return '';
         }
 
@@ -168,7 +168,7 @@ class LocalParameter implements LocalParameterInterface
      */
     public function removeValue($value): LocalParameterInterface
     {
-        if (true === isset($this->values[$value])) {
+        if (isset($this->values[$value])) {
             unset($this->values[$value]);
         }
 

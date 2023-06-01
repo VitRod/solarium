@@ -111,7 +111,7 @@ abstract class AbstractRequestBuilder implements RequestBuilderInterface
     public function boolAttrib(string $name, ?bool $value): string
     {
         if (null !== $value) {
-            $stringValue = (true === (bool) $value) ? 'true' : 'false';
+            $stringValue = ((bool) $value) ? 'true' : 'false';
 
             return $this->attrib($name, $stringValue);
         }
@@ -147,7 +147,7 @@ abstract class AbstractRequestBuilder implements RequestBuilderInterface
      */
     public function getHelper(): Helper
     {
-        if (null === $this->helper) {
+        if (!$this->helper instanceof \Solarium\Core\Query\Helper) {
             $this->helper = new Helper();
         }
 

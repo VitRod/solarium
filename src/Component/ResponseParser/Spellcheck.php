@@ -40,7 +40,7 @@ class Spellcheck extends ResponseParserAbstract implements ComponentParserInterf
 
             if (isset($data['spellcheck']['suggestions']) &&
                 \is_array($data['spellcheck']['suggestions']) &&
-                \count($data['spellcheck']['suggestions']) > 0
+                $data['spellcheck']['suggestions'] !== []
             ) {
                 $spellcheckResults = $data['spellcheck']['suggestions'];
                 if ($query && $query->getResponseWriter() === $query::WT_JSON) {
@@ -114,18 +114,12 @@ class Spellcheck extends ResponseParserAbstract implements ComponentParserInterf
             if ($queryObject && $queryObject->getResponseWriter() === $queryObject::WT_JSON) {
                 if (\is_array(current($values))) {
                     foreach ($values as $key => $value) {
-                        if (\array_key_exists('collationQuery', $value)) {
-                            $values[$key] = $value;
-                        } else {
-                            $values[$key] = $this->convertToKeyValueArray($value);
-                        }
+                        $values[$key] = \array_key_exists('collationQuery', $value) ? $value : $this->convertToKeyValueArray($value);
                     }
+                } elseif (\array_key_exists('collationQuery', $values)) {
+                    $values = [$values];
                 } else {
-                    if (\array_key_exists('collationQuery', $values)) {
-                        $values = [$values];
-                    } else {
-                        $values = [$this->convertToKeyValueArray($values)];
-                    }
+                    $values = [$this->convertToKeyValueArray($values)];
                 }
             }
 

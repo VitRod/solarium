@@ -127,7 +127,9 @@ class PostBigExtractRequest extends AbstractPlugin
     protected function initPluginType()
     {
         $dispatcher = $this->client->getEventDispatcher();
-        $dispatcher->addListener(Events::POST_CREATE_REQUEST, [$this, 'postCreateRequest']);
+        $dispatcher->addListener(Events::POST_CREATE_REQUEST, function (\Solarium\Core\Event\PostCreateRequest $event) : \Solarium\Plugin\PostBigExtractRequest {
+            return $this->postCreateRequest($event);
+        });
     }
 
     /**
@@ -138,6 +140,8 @@ class PostBigExtractRequest extends AbstractPlugin
     public function deinitPlugin()
     {
         $dispatcher = $this->client->getEventDispatcher();
-        $dispatcher->removeListener(Events::POST_CREATE_REQUEST, [$this, 'postCreateRequest']);
+        $dispatcher->removeListener(Events::POST_CREATE_REQUEST, function (\Solarium\Core\Event\PostCreateRequest $event) : \Solarium\Plugin\PostBigExtractRequest {
+            return $this->postCreateRequest($event);
+        });
     }
 }

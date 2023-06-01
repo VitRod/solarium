@@ -167,7 +167,7 @@ class Curl extends Configurable implements AdapterInterface, TimeoutAwareInterfa
     {
         // if there is no data and there are no headers it's a total failure,
         // a connection to the host was impossible.
-        if (empty($data) && 0 === \count($headers)) {
+        if (empty($data) && [] === $headers) {
             throw new HttpException(sprintf('HTTP request failed, %s', curl_error($handle)));
         }
     }

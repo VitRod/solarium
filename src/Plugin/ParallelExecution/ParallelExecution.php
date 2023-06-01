@@ -126,7 +126,7 @@ class ParallelExecution extends AbstractPlugin
         foreach ($this->queries as $key => $data) {
             $event = new PreExecuteEvent($data['query']);
             $this->client->getEventDispatcher()->dispatch($event);
-            if (null !== $result = $event->getResult()) {
+            if (($result = $event->getResult()) instanceof \Solarium\Core\Query\Result\ResultInterface) {
                 $overrideResults[$key] = $result;
                 continue;
             }
@@ -136,7 +136,7 @@ class ParallelExecution extends AbstractPlugin
 
             $event = new PreExecuteRequestEvent($requests[$key], $endpoints[$key]);
             $this->client->getEventDispatcher()->dispatch($event);
-            if (null !== $response = $event->getResponse()) {
+            if (($response = $event->getResponse()) instanceof \Solarium\Core\Client\Response) {
                 $overrideResponses[$key] = $response;
                 continue;
             }

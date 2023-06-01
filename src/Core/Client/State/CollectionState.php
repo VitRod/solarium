@@ -169,7 +169,7 @@ class CollectionState extends AbstractState
             }
         }
 
-        if (empty($uris)) {
+        if ($uris === []) {
             throw new RuntimeException('No Solr nodes are available for this collection.');
         }
 

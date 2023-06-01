@@ -31,7 +31,7 @@ class Analytics implements ComponentParserInterface
      */
     public function parse(?ComponentAwareQueryInterface $query, ?AbstractComponent $component, array $data): ?Result
     {
-        if (false === isset($data['analytics_response']) || null === $component) {
+        if (!isset($data['analytics_response']) || !$component instanceof \Solarium\Component\AbstractComponent) {
             return null;
         }
 
@@ -41,7 +41,7 @@ class Analytics implements ComponentParserInterface
 
         /** @var \Solarium\Component\Analytics\Analytics $component */
         foreach ($component->getExpressions() as $name => $expression) {
-            if (false === isset($response['results'][$name])) {
+            if (!isset($response['results'][$name])) {
                 continue;
             }
 
@@ -53,14 +53,14 @@ class Analytics implements ComponentParserInterface
         $groupings = [];
 
         foreach ($component->getGroupings() as $groupingName => $componentGrouping) {
-            if (false === isset($response['groupings'][$groupingName])) {
+            if (!isset($response['groupings'][$groupingName])) {
                 continue;
             }
 
             $grouping = new Grouping($groupingName);
 
             foreach ($componentGrouping->getFacets() as $facetName => $componentFacet) {
-                if (false === isset($response['groupings'][$groupingName][$facetName])) {
+                if (!isset($response['groupings'][$groupingName][$facetName])) {
                     continue;
                 }
 
@@ -92,14 +92,14 @@ class Analytics implements ComponentParserInterface
         $facet = new Facet($result['value'], $result['pivot'] ?? null);
 
         foreach ($grouping->getExpressions() as $expressionName => $expression) {
-            if (false === isset($result['results'][$expressionName])) {
+            if (!isset($result['results'][$expressionName])) {
                 continue;
             }
 
             $facet->addResult(new Expression($expressionName, $expression, $result['results'][$expressionName]));
         }
 
-        if (false === isset($result['children'])) {
+        if (!isset($result['children'])) {
             return $facet;
         }
 

@@ -43,23 +43,7 @@ class ResponseParser extends ResponseParserAbstract implements ResponseParserInt
                 $suggestResults = $this->convertToKeyValueArray($suggestResults);
             }
 
-            foreach ($suggestResults as $term => $termData) {
-                if ('collation' === $term) {
-                    $collation = $termData;
-                } else {
-                    if (!\array_key_exists(0, $termData)) {
-                        $termData = [$termData];
-                    }
-
-                    foreach ($termData as $currentTermData) {
-                        $allSuggestions[] = $this->createTerm($termClass, $currentTermData);
-
-                        if (!\array_key_exists($term, $suggestions)) {
-                            $suggestions[$term] = $this->createTerm($termClass, $currentTermData);
-                        }
-                    }
-                }
-            }
+            $collation = $suggestResults['collation'] ?? $collation;
         }
 
         return $this->addHeaderInfo(

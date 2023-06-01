@@ -348,9 +348,8 @@ class Helper
                 $output .= ' '.$key.'='.$this->escapeLocalParamValue($value);
             }
         }
-        $output .= '}';
 
-        return $output;
+        return $output . '}';
     }
 
     /**
@@ -405,7 +404,9 @@ class Helper
 
         return preg_replace_callback(
             $this->placeHolderPattern,
-            [$this, 'renderPlaceHolder'],
+            function (array $matches) : string {
+                return $this->renderPlaceHolder($matches);
+            },
             $query
         );
     }
@@ -464,7 +465,7 @@ class Helper
     {
         $cache = 'false';
 
-        if (true === $useCache) {
+        if ($useCache) {
             $cache = 'true';
         }
 
@@ -472,9 +473,8 @@ class Helper
         if (null !== $cost) {
             $result .= ' cost='.$cost;
         }
-        $result .= '}';
 
-        return $result;
+        return $result . '}';
     }
 
     /**

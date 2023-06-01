@@ -142,7 +142,7 @@ class Suggestion
     {
         $word = reset($this->words);
 
-        if (false === isset($word['freq'])) {
+        if (!isset($word['freq'])) {
             return null;
         }
 

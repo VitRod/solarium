@@ -50,7 +50,7 @@ class RequestBuilder extends BaseRequestBuilder
         // add document settings to request
         /** @var \Solarium\QueryType\Update\Query\Document $doc */
         $doc = $query->getDocument();
-        if (null !== $doc) {
+        if ($doc instanceof \Solarium\QueryType\Update\Query\Document) {
             // @phpstan-ignore-next-line we're calling a deprecated method on purpose
             if (null !== $doc->getBoost()) {
                 throw new RuntimeException('Extract does not support document-level boosts, use field boosts instead.');

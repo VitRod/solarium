@@ -64,9 +64,7 @@ class Document extends BaseRequestBuilder
             $xml .= '</doc>';
         }
 
-        $xml .= '</docs>';
-
-        return $xml;
+        return $xml . '</docs>';
     }
 
     /**

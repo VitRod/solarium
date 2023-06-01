@@ -137,10 +137,8 @@ trait ComponentAwareQueryTrait
                     break;
                 }
             }
-        } else {
-            if (isset($this->components[$component])) {
-                unset($this->components[$component]);
-            }
+        } elseif (isset($this->components[$component])) {
+            unset($this->components[$component]);
         }
 
         return $this;

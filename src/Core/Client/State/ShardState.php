@@ -130,7 +130,7 @@ class ShardState extends AbstractState
     public function getShardLeaderBaseUri(): ?string
     {
         if ($this->getShardLeader() instanceof ReplicaState) {
-            return null !== $this->getShardLeader() ? $this->getShardLeader()->getServerUri() : null;
+            return $this->getShardLeader() instanceof \Solarium\Core\Client\State\ReplicaState ? $this->getShardLeader()->getServerUri() : null;
         }
 
         return null;
@@ -161,11 +161,8 @@ class ShardState extends AbstractState
     public function getActiveReplicas(): array
     {
         $replicas = [];
-        foreach ($this->activeReplicas as $replica) {
-            $replicas[] = $replica;
-        }
 
-        return $replicas;
+        return $this->activeReplicas;
     }
 
     /**

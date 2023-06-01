@@ -53,3 +53,4 @@ foreach ($groups as $groupKey => $fieldGroup) {
 }
 
 htmlFooter();
+

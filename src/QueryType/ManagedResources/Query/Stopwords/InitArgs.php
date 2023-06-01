@@ -69,10 +69,8 @@ class InitArgs implements InitArgsInterface
     public function setInitArgs(array $initArgs): InitArgsInterface
     {
         foreach ($initArgs as $arg => $value) {
-            switch ($arg) {
-                case 'ignoreCase':
-                    $this->setIgnoreCase($value);
-                    break;
+            if ($arg === 'ignoreCase') {
+                $this->setIgnoreCase($value);
             }
         }
 
@@ -88,7 +86,7 @@ class InitArgs implements InitArgsInterface
     {
         $initArgs = [];
 
-        if (isset($this->ignoreCase)) {
+        if ($this->ignoreCase !== null) {
             $initArgs['ignoreCase'] = $this->ignoreCase;
         }
 

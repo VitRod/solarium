@@ -195,11 +195,6 @@ class Customization extends Configurable
         if (self::TYPE_PARAM !== $type && self::TYPE_HEADER !== $type) {
             return false;
         }
-
-        if (null === $this->getKey() || null === $this->getName() || null === $this->getValue()) {
-            return false;
-        }
-
-        return true;
+        return !(null === $this->getKey() || null === $this->getName() || null === $this->getValue());
     }
 }

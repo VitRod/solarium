@@ -26,7 +26,7 @@ trait ConfigurableInitTrait
         foreach ($this->options as $name => $option) {
             $setter = sprintf('set%s', ucfirst($name));
 
-            if (true === \is_callable([$this, $setter])) {
+            if (\is_callable([$this, $setter])) {
                 $this->$setter($option);
             }
         }

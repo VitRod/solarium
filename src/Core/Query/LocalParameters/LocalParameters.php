@@ -1024,7 +1024,7 @@ class LocalParameters implements \ArrayAccess
      */
     private function getParameter(string $type): LocalParameterInterface
     {
-        if (false === isset($this->parameters[$type])) {
+        if (!isset($this->parameters[$type])) {
             $this->parameters[$type] = new LocalParameter($type);
         }
 

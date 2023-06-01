@@ -37,7 +37,7 @@ class Stats extends BaseRequestBuilder implements ComponentRequestBuilderInterfa
             $statsField = $field->getKey();
             $pivots = $field->getPivots();
 
-            if (0 !== \count($pivots)) {
+            if ([] !== $pivots) {
                 $statsField = $this->renderLocalParams($statsField, ['tag' => $pivots]);
             }
 

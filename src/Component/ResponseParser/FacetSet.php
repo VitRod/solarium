@@ -60,41 +60,39 @@ class FacetSet extends ResponseParserAbstract implements ComponentParserInterfac
      */
     public function parse(?ComponentAwareQueryInterface $query, ?AbstractComponent $facetSet, array $data): ?ResultFacetSet
     {
-        if (!$query) {
+        if (!$query instanceof \Solarium\Component\ComponentAwareQueryInterface) {
             throw new InvalidArgumentException('A valid query object needs to be provided.');
         }
-        if (!$facetSet) {
+        if (!$facetSet instanceof \Solarium\Component\AbstractComponent) {
             throw new InvalidArgumentException('A valid facet set component needs to be provided.');
         }
 
-        if (true === $facetSet->getExtractFromResponse()) {
-            if (false === empty($data['facet_counts'])) {
-                foreach ($data['facet_counts'] as $key => $facets) {
-                    switch ($key) {
-                        case 'facet_fields':
-                            $method = 'createFacetField';
-                            break;
-                        case 'facet_queries':
-                            $method = 'createFacetQuery';
-                            break;
-                        case 'facet_ranges':
-                            $method = 'createFacetRange';
-                            break;
-                        case 'facet_pivot':
-                            $method = 'createFacetPivot';
-                            break;
-                        case 'facet_interval':
-                            $method = 'createFacetInterval';
-                            break;
-                        default:
-                            throw new RuntimeException('Unknown facet class identifier');
-                    }
-                    foreach ($facets as $k => $facet) {
-                        $facetObject = $facetSet->$method($k);
-                        if ('facet_pivot' === $key) {
-                            /* @var \Solarium\Component\Facet\Pivot $facetObject */
-                            $facetObject->setFields($k);
-                        }
+        if (true === $facetSet->getExtractFromResponse() && !empty($data['facet_counts'])) {
+            foreach ($data['facet_counts'] as $key => $facets) {
+                switch ($key) {
+                    case 'facet_fields':
+                        $method = 'createFacetField';
+                        break;
+                    case 'facet_queries':
+                        $method = 'createFacetQuery';
+                        break;
+                    case 'facet_ranges':
+                        $method = 'createFacetRange';
+                        break;
+                    case 'facet_pivot':
+                        $method = 'createFacetPivot';
+                        break;
+                    case 'facet_interval':
+                        $method = 'createFacetInterval';
+                        break;
+                    default:
+                        throw new RuntimeException('Unknown facet class identifier');
+                }
+                foreach ($facets as $k => $facet) {
+                    $facetObject = $facetSet->$method($k);
+                    if ('facet_pivot' === $key) {
+                        /* @var \Solarium\Component\Facet\Pivot $facetObject */
+                        $facetObject->setFields($k);
                     }
                 }
             }
@@ -171,27 +169,11 @@ class FacetSet extends ResponseParserAbstract implements ComponentParserInterfac
                             (isset($facets[$key]) && $facets[$key] instanceof JsonFacetInterface) ? $facets[$key]->getFacets() : []
                         )));
                     }
-                    if (isset($values['numBuckets'])) {
-                        $numBuckets = $values['numBuckets'];
-                    } else {
-                        $numBuckets = null;
-                    }
+                    $numBuckets = isset($values['numBuckets']) ? $values['numBuckets'] : null;
                     if (isset($facets[$key]) && $facets[$key] instanceof QueryFacetJsonRange) {
-                        if (isset($values['before']['count'])) {
-                            $before = $values['before']['count'];
-                        } else {
-                            $before = null;
-                        }
-                        if (isset($values['after']['count'])) {
-                            $after = $values['after']['count'];
-                        } else {
-                            $after = null;
-                        }
-                        if (isset($values['between']['count'])) {
-                            $between = $values['between']['count'];
-                        } else {
-                            $between = null;
-                        }
+                        $before = isset($values['before']['count']) ? $values['before']['count'] : null;
+                        $after = isset($values['after']['count']) ? $values['after']['count'] : null;
+                        $between = isset($values['between']['count']) ? $values['between']['count'] : null;
                         $bucketsAndAggregations[$key] = new ResultFacetJsonRange($buckets, $before, $after, $between);
                     } elseif ($buckets || $numBuckets) {
                         $bucketsAndAggregations[$key] = new Buckets($buckets, $numBuckets);
@@ -404,9 +386,9 @@ class FacetSet extends ResponseParserAbstract implements ComponentParserInterfac
             $this->pivotStats($pivot);
         }
 
-        if (null !== $stats = $pivotItem->getStats()) {
+        if (($stats = $pivotItem->getStats()) instanceof \Solarium\Component\Result\Stats\Stats) {
             foreach ($stats->getResults() as $key => $result) {
-                if ($result instanceof Result || false === \is_array($result)) {
+                if ($result instanceof Result || !\is_array($result)) {
                     continue;
                 }
 

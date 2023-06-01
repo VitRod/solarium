@@ -71,19 +71,15 @@ class Configurable implements ConfigurableInterface
             // first convert to array if needed
             if (!\is_array($options)) {
                 if (\is_object($options)) {
-                    $options = (!method_exists($options, 'toArray') ? $this->toArray($options) : $options->toArray());
+                    $options = (method_exists($options, 'toArray') ? $options->toArray() : $this->toArray($options));
                 } else {
                     throw new InvalidArgumentException('Options value given to the setOptions() method must be an array or a Zend_Config object');
                 }
             }
 
-            if (true === $overwrite) {
-                $this->options = $options;
-            } else {
-                $this->options = array_merge($this->options, $options);
-            }
+            $this->options = $overwrite ? $options : array_merge($this->options, $options);
 
-            if (true === \is_callable([$this, 'initLocalParameters'])) {
+            if (\is_callable([$this, 'initLocalParameters'])) {
                 $this->initLocalParameters();
             }
             // re-init for new options

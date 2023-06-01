@@ -77,7 +77,7 @@ class Config extends AbstractCommand
      */
     public function getRawData(): ?string
     {
-        if (null !== $this->getInitArgs() && !empty($this->getInitArgs()->getInitArgs())) {
+        if ($this->getInitArgs() instanceof \Solarium\QueryType\ManagedResources\Query\InitArgsInterface && !empty($this->getInitArgs()->getInitArgs())) {
             return json_encode(['initArgs' => $this->getInitArgs()->getInitArgs()]);
         }
 

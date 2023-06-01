@@ -33,7 +33,7 @@ trait ObjectTrait
             return null;
         }
 
-        if (true === \is_object($variable)
+        if (\is_object($variable)
             && (\get_class($variable) === $class || is_subclass_of($variable, $class))
         ) {
             return $variable;
@@ -45,14 +45,14 @@ trait ObjectTrait
             throw new InvalidArgumentException(sprintf('Class %s does not exists', $class));
         }
 
-        if (true === \is_array($variable) && true === $refClass->isSubclassOf(Configurable::class)) {
-            if (false === $refClass->isAbstract()) {
+        if (\is_array($variable) && $refClass->isSubclassOf(Configurable::class)) {
+            if (!$refClass->isAbstract()) {
                 return new $class($variable);
             }
 
-            if (true === isset($variable['type'])
+            if (isset($variable['type'])
                 && (false !== $map = $refClass->getConstant('CLASSMAP'))
-                && (true === isset($map[$variable['type']]))
+                && (isset($map[$variable['type']]))
             ) {
                 $class = $map[$variable['type']];
 

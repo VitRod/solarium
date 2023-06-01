@@ -41,7 +41,7 @@ class DisMax implements ComponentRequestBuilderInterface
 
         // add boostqueries to request
         $boostQueries = $component->getBoostQueries();
-        if (0 !== \count($boostQueries)) {
+        if ([] !== $boostQueries) {
             foreach ($boostQueries as $boostQuery) {
                 $request->addParam('bq', $boostQuery->getQuery());
             }

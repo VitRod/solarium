@@ -30,13 +30,13 @@ class DistributedSearch implements ComponentRequestBuilderInterface
     {
         // add shards to request
         $shards = array_values($component->getShards());
-        if (\count($shards)) {
+        if ($shards !== []) {
             $request->addParam('shards', implode(',', $shards));
         }
 
         $replicas = array_values($component->getReplicas());
 
-        if (\count($replicas)) {
+        if ($replicas !== []) {
             $value = ($request->getParam('shards')) ? $request->getParam('shards').','.implode('|', $replicas) : implode('|', $replicas);
 
             $request->addParam('shards', $value, true);
@@ -46,7 +46,7 @@ class DistributedSearch implements ComponentRequestBuilderInterface
 
         // add collections to request
         $collections = array_values($component->getCollections());
-        if (\count($collections)) {
+        if ($collections !== []) {
             $request->addParam('collection', implode(',', $collections));
         }
 

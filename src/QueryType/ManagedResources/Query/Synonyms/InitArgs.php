@@ -145,11 +145,11 @@ class InitArgs implements InitArgsInterface
     {
         $initArgs = [];
 
-        if (isset($this->ignoreCase)) {
+        if ($this->ignoreCase !== null) {
             $initArgs['ignoreCase'] = $this->ignoreCase;
         }
 
-        if (isset($this->format)) {
+        if ($this->format !== null) {
             $initArgs['format'] = $this->format;
         }
 

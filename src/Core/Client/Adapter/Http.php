@@ -56,7 +56,7 @@ class Http implements AdapterInterface, TimeoutAwareInterface, ProxyAwareInterfa
     {
         // if there is no data and there are no headers it's a total failure,
         // a connection to the host was impossible.
-        if (false === $data && 0 === \count($headers)) {
+        if (false === $data && [] === $headers) {
             throw new HttpException('HTTP request failed');
         }
     }
@@ -151,7 +151,7 @@ class Http implements AdapterInterface, TimeoutAwareInterface, ProxyAwareInterfa
         }
 
         $headers = $request->getHeaders();
-        if (\count($headers) > 0) {
+        if ($headers !== []) {
             stream_context_set_option(
                 $context,
                 'http',

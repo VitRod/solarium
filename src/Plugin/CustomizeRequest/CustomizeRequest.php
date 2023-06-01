@@ -81,16 +81,14 @@ class CustomizeRequest extends AbstractPlugin
         $key = $customization->getKey();
 
         // check for non-empty key
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('A Customization must have a key value');
         }
 
         // check for a unique key
-        if (\array_key_exists($key, $this->customizations)) {
-            // double add calls for the same customization are ignored, others cause an exception
-            if ($this->customizations[$key] !== $customization) {
-                throw new InvalidArgumentException('A Customization must have a unique key value');
-            }
+        // double add calls for the same customization are ignored, others cause an exception
+        if (\array_key_exists($key, $this->customizations) && $this->customizations[$key] !== $customization) {
+            throw new InvalidArgumentException('A Customization must have a unique key value');
         }
 
         $this->customizations[$key] = $customization;
@@ -241,10 +239,8 @@ class CustomizeRequest extends AbstractPlugin
     protected function init()
     {
         foreach ($this->options as $name => $value) {
-            switch ($name) {
-                case 'customization':
-                    $this->addCustomizations($value);
-                    break;
+            if ($name === 'customization') {
+                $this->addCustomizations($value);
             }
         }
     }
@@ -258,7 +254,9 @@ class CustomizeRequest extends AbstractPlugin
     {
         $dispatcher = $this->client->getEventDispatcher();
         if (is_subclass_of($dispatcher, '\Symfony\Component\EventDispatcher\EventDispatcherInterface')) {
-            $dispatcher->addListener(Events::POST_CREATE_REQUEST, [$this, 'postCreateRequest']);
+            $dispatcher->addListener(Events::POST_CREATE_REQUEST, function (object $event) : \Solarium\Plugin\CustomizeRequest\CustomizeRequest {
+                return $this->postCreateRequest($event);
+            });
         }
     }
 
@@ -271,7 +269,9 @@ class CustomizeRequest extends AbstractPlugin
     {
         $dispatcher = $this->client->getEventDispatcher();
         if (is_subclass_of($dispatcher, '\Symfony\Component\EventDispatcher\EventDispatcherInterface')) {
-            $dispatcher->removeListener(Events::POST_CREATE_REQUEST, [$this, 'postCreateRequest']);
+            $dispatcher->removeListener(Events::POST_CREATE_REQUEST, function (object $event) : \Solarium\Plugin\CustomizeRequest\CustomizeRequest {
+                return $this->postCreateRequest($event);
+            });
         }
     }
 }

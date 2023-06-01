@@ -10,7 +10,7 @@ $client = new Solarium\Client($adapter, $eventDispatcher, $config);
 $update = $client->createUpdate();
 
 // add the delete id and a commit command to the update query
-$update->addDeleteById(123);
+$update->addDeleteById(11);
 $update->addCommit();
 
 // this executes the query and returns the result

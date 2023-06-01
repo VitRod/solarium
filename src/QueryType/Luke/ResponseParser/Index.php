@@ -38,9 +38,7 @@ class Index extends AbstractResponseParser implements ResponseParserInterface
         $data['fieldsResult'] = null;
         $data['infoResult'] = null;
 
-        $data = $this->addHeaderInfo($data, $data);
-
-        return $data;
+        return $this->addHeaderInfo($data, $data);
     }
 
     /**

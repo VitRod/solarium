@@ -30,9 +30,8 @@ class RequestBuilder extends BaseRequestBuilder
     {
         $request = parent::build($query);
         $request->setMethod(Request::METHOD_GET);
-        $request = $this->addOptionsFromAction($query->getAction(), $request);
 
-        return $request;
+        return $this->addOptionsFromAction($query->getAction(), $request);
     }
 
     /**

@@ -183,10 +183,8 @@ abstract class AbstractBufferedUpdate extends AbstractPlugin
     protected function init()
     {
         foreach ($this->options as $name => $value) {
-            switch ($name) {
-                case 'buffersize':
-                    $this->setBufferSize($value);
-                    break;
+            if ($name === 'buffersize') {
+                $this->setBufferSize($value);
             }
         }
     }

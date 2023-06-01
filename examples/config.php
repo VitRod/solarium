@@ -8,7 +8,9 @@ $config = array(
             'port' => 8983,
             'path' => '/',
             // 'context' => 'solr', # only necessary to set if not the default 'solr'
-            'core' => 'techproducts',
+            //'core' => 'films_core',
+//            'core' => 'techproducts',
+            'core' => 'directors',
         )
     )
 );

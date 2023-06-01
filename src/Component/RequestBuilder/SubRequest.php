@@ -59,7 +59,7 @@ class SubRequest extends BaseRequestBuilder implements RequestParamsInterface
         $queryString = '';
         $params = $this->getParams();
 
-        if (0 !== \count($params)) {
+        if ([] !== $params) {
             $queryString = $this->getHelper()->qparser(
                 $this->getQueryParser(),
                 $params

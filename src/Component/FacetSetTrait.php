@@ -42,7 +42,7 @@ trait FacetSetTrait
 
         $key = $facet->getKey();
 
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('A facet must have a key value');
         }
 

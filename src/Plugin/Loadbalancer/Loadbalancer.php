@@ -520,7 +520,7 @@ class Loadbalancer extends AbstractPlugin
      */
     protected function getRandomizer(): WeightedRandomChoice
     {
-        if (null === $this->randomizer) {
+        if (!$this->randomizer instanceof \Solarium\Plugin\Loadbalancer\WeightedRandomChoice) {
             $this->randomizer = new WeightedRandomChoice($this->endpoints);
         }
 
@@ -557,8 +557,12 @@ class Loadbalancer extends AbstractPlugin
         $dispatcher = $this->client->getEventDispatcher();
         if (is_subclass_of($dispatcher, '\Symfony\Component\EventDispatcher\EventDispatcherInterface')) {
             // The Loadbalancer plugin needs to be the last plugin executed on PRE_EXECUTE_REQUEST. Set Priority to 0.
-            $dispatcher->addListener(Events::PRE_EXECUTE_REQUEST, [$this, 'preExecuteRequest'], 0);
-            $dispatcher->addListener(Events::PRE_CREATE_REQUEST, [$this, 'preCreateRequest']);
+            $dispatcher->addListener(Events::PRE_EXECUTE_REQUEST, function (object $event) : \Solarium\Plugin\Loadbalancer\Loadbalancer {
+                return $this->preExecuteRequest($event);
+            }, 0);
+            $dispatcher->addListener(Events::PRE_CREATE_REQUEST, function (object $event) : \Solarium\Plugin\Loadbalancer\Loadbalancer {
+                return $this->preCreateRequest($event);
+            });
         }
     }
 
@@ -571,8 +575,12 @@ class Loadbalancer extends AbstractPlugin
     {
         $dispatcher = $this->client->getEventDispatcher();
         if (is_subclass_of($dispatcher, '\Symfony\Component\EventDispatcher\EventDispatcherInterface')) {
-            $dispatcher->removeListener(Events::PRE_EXECUTE_REQUEST, [$this, 'preExecuteRequest']);
-            $dispatcher->removeListener(Events::PRE_CREATE_REQUEST, [$this, 'preCreateRequest']);
+            $dispatcher->removeListener(Events::PRE_EXECUTE_REQUEST, function (object $event) : \Solarium\Plugin\Loadbalancer\Loadbalancer {
+                return $this->preExecuteRequest($event);
+            });
+            $dispatcher->removeListener(Events::PRE_CREATE_REQUEST, function (object $event) : \Solarium\Plugin\Loadbalancer\Loadbalancer {
+                return $this->preCreateRequest($event);
+            });
         }
     }
 }

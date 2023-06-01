@@ -318,7 +318,7 @@ class Pivot extends AbstractFacet
      */
     public function addStats($stats): self
     {
-        if (false === \is_array($stats)) {
+        if (!\is_array($stats)) {
             $stats = array_map('trim', explode(',', $stats));
         }
 
@@ -412,10 +412,8 @@ class Pivot extends AbstractFacet
     protected function init()
     {
         foreach ($this->options as $name => $value) {
-            switch ($name) {
-                case 'fields':
-                    $this->addFields($value);
-                    break;
+            if ($name === 'fields') {
+                $this->addFields($value);
             }
         }
     }

@@ -149,7 +149,7 @@ abstract class AbstractQuery extends Configurable implements QueryInterface
      */
     public function getHelper(): Helper
     {
-        if (null === $this->helper) {
+        if (!$this->helper instanceof \Solarium\Core\Query\Helper) {
             $this->helper = new Helper($this);
         }
 

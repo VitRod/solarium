@@ -60,8 +60,7 @@ class AdapterHelper
         $body .= 'Content-Disposition: form-data; name="file"; filename="'.$baseName.'"';
         $body .= "\r\nContent-Type: ".Request::CONTENT_TYPE_APPLICATION_OCTET_STREAM."\r\n\r\n";
         $body .= file_get_contents($request->getFileUpload(), 'r');
-        $body .= "\r\n--{$request->getHash()}--\r\n";
 
-        return $body;
+        return $body . "\r\n--{$request->getHash()}--\r\n";
     }
 }

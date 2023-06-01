@@ -36,7 +36,7 @@ class Highlighting implements ComponentRequestBuilderInterface
         $request->addParam('hl.method', $component->getMethod());
 
         // set global highlighting params
-        if (0 !== \count($component->getFields())) {
+        if ([] !== $component->getFields()) {
             $request->addParam('hl.fl', implode(',', array_keys($component->getFields())));
         }
         $request->addParam('hl.q', $component->getQuery());

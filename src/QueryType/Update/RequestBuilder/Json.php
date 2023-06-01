@@ -127,7 +127,7 @@ class Json extends AbstractRequestBuilder
      */
     public function buildDeleteJson(Delete $command, array &$json): void
     {
-        if (0 !== count($ids = $command->getIds())) {
+        if ([] !== ($ids = $command->getIds())) {
             $json[] = '"delete":'.json_encode($ids);
         }
 

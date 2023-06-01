@@ -52,7 +52,7 @@ class RequestBuilder extends BaseRequestBuilder
         foreach ($query->getSorts() as $field => $order) {
             $sort[] = $field.' '.$order;
         }
-        if (0 !== \count($sort)) {
+        if ([] !== $sort) {
             $request->addParam('sort', implode(',', $sort));
         }
 

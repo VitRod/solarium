@@ -332,7 +332,7 @@ class Client extends Configurable implements ClientInterface
 
         if (null !== $endpoint->getKey()) {
             $this->addEndpoint($endpoint);
-            if (true === $setAsDefault) {
+            if ($setAsDefault) {
                 $this->setDefaultEndpoint($endpoint);
             }
         }
@@ -360,7 +360,7 @@ class Client extends Configurable implements ClientInterface
 
         $key = $endpoint->getKey();
 
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('An endpoint must have a key value');
         }
 
@@ -726,11 +726,9 @@ class Client extends Configurable implements ClientInterface
                     break;
                 }
             }
-        } else {
-            if (isset($this->pluginInstances[$plugin])) {
-                $this->pluginInstances[$plugin]->deinitPlugin();
-                unset($this->pluginInstances[$plugin]);
-            }
+        } elseif (isset($this->pluginInstances[$plugin])) {
+            $this->pluginInstances[$plugin]->deinitPlugin();
+            unset($this->pluginInstances[$plugin]);
         }
 
         return $this;
@@ -749,7 +747,7 @@ class Client extends Configurable implements ClientInterface
     {
         $event = new PreCreateRequestEvent($query);
         $this->eventDispatcher->dispatch($event);
-        if (null !== $event->getRequest()) {
+        if ($event->getRequest() instanceof \Solarium\Core\Client\Request) {
             return $event->getRequest();
         }
 
@@ -780,7 +778,7 @@ class Client extends Configurable implements ClientInterface
     {
         $event = new PreCreateResultEvent($query, $response);
         $this->eventDispatcher->dispatch($event);
-        if (null !== $event->getResult()) {
+        if ($event->getResult() instanceof \Solarium\Core\Query\Result\ResultInterface) {
             return $event->getResult();
         }
 
@@ -809,7 +807,7 @@ class Client extends Configurable implements ClientInterface
     {
         $event = new PreExecuteEvent($query);
         $this->eventDispatcher->dispatch($event);
-        if (null !== $event->getResult()) {
+        if ($event->getResult() instanceof \Solarium\Core\Query\Result\ResultInterface) {
             return $event->getResult();
         }
 
@@ -840,7 +838,7 @@ class Client extends Configurable implements ClientInterface
 
         $event = new PreExecuteRequestEvent($request, $endpoint);
         $this->eventDispatcher->dispatch($event);
-        if (null !== $event->getResponse()) {
+        if ($event->getResponse() instanceof \Solarium\Core\Client\Response) {
             $response = $event->getResponse(); // a plugin result overrules the standard execution result
         } else {
             $response = $this->getAdapter()->execute($request, $endpoint);
@@ -1121,7 +1119,7 @@ class Client extends Configurable implements ClientInterface
 
         $event = new PreCreateQueryEvent($type, $options);
         $this->eventDispatcher->dispatch($event);
-        if (null !== $event->getQuery()) {
+        if ($event->getQuery() instanceof \Solarium\Core\Query\QueryInterface) {
             return $event->getQuery();
         }
 

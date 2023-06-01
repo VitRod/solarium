@@ -55,7 +55,7 @@ class Add extends AbstractAdd
      */
     public function getRawData(): ?string
     {
-        if (null !== $this->getSynonyms() && !empty($this->getSynonyms()->getSynonyms())) {
+        if ($this->getSynonyms() instanceof \Solarium\QueryType\ManagedResources\Query\Synonyms\Synonyms && !empty($this->getSynonyms()->getSynonyms())) {
             if (null !== $this->getSynonyms()->getTerm() && '' !== trim($this->getSynonyms()->getTerm())) {
                 return json_encode([$this->getSynonyms()->getTerm() => $this->getSynonyms()->getSynonyms()]);
             }

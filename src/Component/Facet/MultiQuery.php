@@ -87,7 +87,7 @@ class MultiQuery extends AbstractFacet
 
         $key = $facetQuery->getKey();
 
-        if (null === $key || 0 === \strlen($key)) {
+        if (null === $key || (string) $key === '') {
             throw new InvalidArgumentException('A facetquery must have a key value');
         }
 
@@ -98,7 +98,7 @@ class MultiQuery extends AbstractFacet
         // forward shared excludes
         $excludes = $this->getLocalParameters()->getExcludes();
 
-        if (0 !== \count($excludes)) {
+        if ([] !== $excludes) {
             $facetQuery->getLocalParameters()->addExcludes($excludes);
         }
 
@@ -284,13 +284,11 @@ class MultiQuery extends AbstractFacet
     protected function init()
     {
         foreach ($this->options as $name => $value) {
-            switch ($name) {
-                case 'query':
-                    if (!\is_array($value)) {
-                        $value = [['query' => $value]];
-                    }
-                    $this->addQueries($value);
-                    break;
+            if ($name === 'query') {
+                if (!\is_array($value)) {
+                    $value = [['query' => $value]];
+                }
+                $this->addQueries($value);
             }
         }
     }

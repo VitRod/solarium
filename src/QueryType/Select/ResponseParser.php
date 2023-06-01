@@ -57,7 +57,7 @@ class ResponseParser extends ResponseParserAbstract implements ResponseParserInt
         $components = [];
         foreach ($query->getComponents() as $component) {
             $componentParser = $component->getResponseParser();
-            if ($componentParser) {
+            if ($componentParser instanceof \Solarium\Component\ResponseParser\ComponentParserInterface) {
                 $components[$component->getType()] = $componentParser->parse($query, $component, $data);
             }
         }

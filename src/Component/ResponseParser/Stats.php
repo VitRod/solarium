@@ -37,7 +37,7 @@ class Stats extends ResponseParserAbstract implements ComponentParserInterface
      */
     public function parse(?ComponentAwareQueryInterface $query, ?AbstractComponent $statsComponent, array $data): ResultStats
     {
-        if (!$query) {
+        if (!$query instanceof \Solarium\QueryType\Select\Query\Query) {
             throw new InvalidArgumentException('A valid query object needs to be provided.');
         }
 

@@ -33,10 +33,8 @@ class ResponseParser extends SelectResponseParser
         $parseResult = parent::parse($result);
         if (isset($data['interestingTerms']) && 'none' !== $query->getInterestingTerms()) {
             $terms = $data['interestingTerms'];
-            if ('details' === $query->getInterestingTerms()) {
-                if ($query->getResponseWriter() === $query::WT_JSON) {
-                    $terms = $this->convertToKeyValueArray($terms);
-                }
+            if ('details' === $query->getInterestingTerms() && $query->getResponseWriter() === $query::WT_JSON) {
+                $terms = $this->convertToKeyValueArray($terms);
             }
             $parseResult['interestingTerms'] = $terms;
         }

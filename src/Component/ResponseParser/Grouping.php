@@ -40,10 +40,10 @@ class Grouping implements ComponentParserInterface
             return new Result([]);
         }
 
-        if (!$query) {
+        if (!$query instanceof \Solarium\Component\ComponentAwareQueryInterface) {
             throw new InvalidArgumentException('A valid query object needs to be provided.');
         }
-        if (!$grouping) {
+        if (!$grouping instanceof \Solarium\Component\AbstractComponent) {
             throw new InvalidArgumentException('A valid grouping component needs to be provided.');
         }
 

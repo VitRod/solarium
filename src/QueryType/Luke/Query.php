@@ -317,10 +317,8 @@ class Query extends BaseQuery
     protected function init()
     {
         foreach ($this->options as $name => $value) {
-            switch ($name) {
-                case 'fields':
-                    $this->setFields($value);
-                    break;
+            if ($name === 'fields') {
+                $this->setFields($value);
             }
         }
     }

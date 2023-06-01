@@ -159,7 +159,7 @@ class PrefetchIterator extends AbstractPlugin implements \Iterator, \Countable
     public function count(): int
     {
         // if no results are available yet, get them now
-        if (null === $this->result) {
+        if (!$this->result instanceof \SelectResult) {
             $this->fetchNext();
         }
 
@@ -226,7 +226,7 @@ class PrefetchIterator extends AbstractPlugin implements \Iterator, \Countable
         $adjustedIndex = $this->position % $this->options['prefetch'];
 
         // this condition prevents erroneously fetching the next set of results if a count is done before the iterator is used
-        if (0 === $adjustedIndex && (0 !== $this->position || null === $this->result)) {
+        if (0 === $adjustedIndex && (0 !== $this->position || !$this->result instanceof \SelectResult)) {
             $this->fetchNext();
         }
 

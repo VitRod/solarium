@@ -98,10 +98,8 @@ class Interval extends AbstractFacet
     protected function init()
     {
         foreach ($this->options as $name => $value) {
-            switch ($name) {
-                case 'set':
-                    $this->setSet($value);
-                    break;
+            if ($name === 'set') {
+                $this->setSet($value);
             }
         }
     }

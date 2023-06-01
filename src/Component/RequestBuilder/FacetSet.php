@@ -42,7 +42,7 @@ class FacetSet extends RequestBuilder implements ComponentRequestBuilderInterfac
     {
         $facets = $component->getFacets();
 
-        if (0 !== \count($facets)) {
+        if ([] !== $facets) {
             $nonJson = false;
             $jsonFacets = [];
 
@@ -126,7 +126,7 @@ class FacetSet extends RequestBuilder implements ComponentRequestBuilderInterfac
                 $request->addParam('facet.pivot.mincount', $component->getPivotMinCount());
             }
 
-            if ($jsonFacets) {
+            if ($jsonFacets !== []) {
                 $request->addParam('json.facet', json_encode($jsonFacets));
             }
         }
@@ -285,7 +285,7 @@ class FacetSet extends RequestBuilder implements ComponentRequestBuilderInterfac
         $fields = $facet->getFields();
         $stats = $facet->getStats();
 
-        if (\count($stats) > 0) {
+        if ($stats !== []) {
             $key = ['stats' => implode('', $stats)];
 
             // when specifying stats, Solr sets the field as key
