@@ -2,6 +2,24 @@
 
 Original repository is  here https://github.com/solariumphp/solarium 
 
+in order to work with examples folder in Solarium we need to create core in Solr with data taken from Solr folders . Then import and index xml files using command line like in this video: Solr Indexing Sample Docs to solr core and searching with various filter query options   https://www.youtube.com/watch?v=rxoS1p1TaFY&t=304s  
+
+The command Line for CMD:
+
+<h4> let assume file as dummy.xml under example/exampledocs directory.
+Go to exampledocs directory using command prompt & execute -
+java -jar post.jar dummy.xml
+
+For multiple XML files use -
+java -jar post.jar dummy.xml dummy1.xml
+
+For all XML files present in working directory use-
+java -jar post.jar *.xml  </h4>
+
+
+
+
+
 In the  version PHP 8.1 in some  files appeared the  following errors:  "Warning: Array to string conversion" . And  because of it  some output did not appear.
 
 <h1> I  substituted the  following code in php files : </h1>
