@@ -4,7 +4,7 @@ Original repository is  here https://github.com/solariumphp/solarium
 
 in order to work with examples folder in Solarium we need to create core in Solr with data taken from Solr folders . Then import and index xml files using command line like in this video: Solr Indexing Sample Docs to solr core and searching with various filter query options   https://www.youtube.com/watch?v=rxoS1p1TaFY&t=304s  
 
-The command Line for CMD:
+The command Line for CMD according to video: java -Dc=music -jar post.jar *.xml
 
 <h4> let assume file as dummy.xml under example/exampledocs directory.
 Go to exampledocs directory using command prompt & execute -
