@@ -4,7 +4,7 @@ Original repository is  here https://github.com/solariumphp/solarium
 
 In the  version PHP 8.1 in some  files appeared the  following errors:  "Warning: Array to string conversion" . And  because of it  some output did not appear.
 
-<h1> I  substituted the  following code in php file : </h1>
+<h1> I  substituted the  following code in php files : </h1>
       // show documents using the resultset iterator
       
       foreach ($resultset as $document) {
