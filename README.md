@@ -21,7 +21,7 @@ java -jar post.jar *.xml  </h4>
 <br>
 
 
-Also in the  version PHP 8.1 in some  files appeared the  following errors:  "Warning: Array to string conversion" . And  because of it  some output did not appear.
+Also in the  version PHP 8.1 in some php files of solarium project appeared the  following errors:  "Warning: Array to string conversion" . And  because of it  some output did not appear.
 
 <h1> I  substituted the  following code in php files : </h1>
       // show documents using the resultset iterator
