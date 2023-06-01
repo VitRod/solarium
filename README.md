@@ -34,7 +34,7 @@ Also in the  version PHP 8.1 in some php files of solarium project appeared the 
          echo '</table>';
       }
 
-<h1> using this kind of code the desired output appears. </h1>
+<h1> with this kind of code and desired output appeared. </h1>
 // show documents using the resultset iterator
 
             foreach ($resultset as $document) {
